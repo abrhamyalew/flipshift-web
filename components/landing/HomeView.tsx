@@ -8,18 +8,18 @@ export default function HomeView() {
     <section
       id="home-view"
       aria-label="FlipShift Home"
-      className="relative w-full h-full min-h-[calc(100dvh-73px)] flex flex-col lg:flex-row items-stretch justify-between bg-[#183A37] text-cream overflow-hidden"
+      className="relative w-full h-full min-h-[100dvh] flex flex-col lg:flex-row items-stretch justify-between bg-[#183A37] text-cream overflow-y-auto lg:overflow-hidden"
     >
       {/* Left Column: Eyebrow-Free Headline, Supporting Copy, Waitlist */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 lg:py-0 z-10">
+      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-24 sm:pt-28 lg:pt-16 pb-12 z-20 my-auto">
         <div className="max-w-xl">
-          <h1 className="font-serif text-cream text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.12] tracking-tight mb-6">
+          <h1 className="font-serif text-cream text-3xl sm:text-4xl lg:text-[44px] xl:text-5xl font-normal leading-[1.12] tracking-tight mb-5">
             Your schedule rotates.
             <br />
             Your body doesn&apos;t have to guess.
           </h1>
 
-          <p className="font-sans text-cream/75 text-base sm:text-lg lg:text-xl leading-relaxed mb-8 max-w-lg font-light">
+          <p className="font-sans text-cream/75 text-sm sm:text-base lg:text-lg leading-relaxed mb-7 max-w-lg font-light">
             FlipShift reads your actual work schedule and builds a daily
             circadian plan around it. Sleep timing, light exposure, caffeine
             cutoffs, alertness forecasts. Specific to your next shift, not
@@ -32,16 +32,39 @@ export default function HomeView() {
         </div>
       </div>
 
-      {/* Right Column: Generative Creamy Smoke Shader Canvas */}
-      <div className="w-full lg:w-1/2 relative min-h-[360px] lg:min-h-full flex-1 border-t lg:border-t-0 lg:border-l border-cream/10 bg-[#121817]/60">
-        {/* Generative Two-Level Domain Warp Shader */}
-        <SmokeShader
-          className="absolute inset-0 w-full h-full cursor-crosshair"
-          interactive={true}
+      {/* Right Column: Seamless Blurred Transition from Solid into Fluid Animation */}
+      <div className="w-full lg:w-1/2 relative min-h-[380px] lg:min-h-full flex-1 overflow-hidden">
+        {/* Soft Feathered Mask on the Fluid Shader Container */}
+        <div
+          className="absolute inset-0 w-full h-full"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 8%, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.9) 35%, black 48%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 8%, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.9) 35%, black 48%)",
+          }}
+        >
+          <SmokeShader
+            className="w-full h-full cursor-crosshair"
+            interactive={true}
+          />
+        </div>
+
+        {/* Soft Organic Blur / Gradient Feather from Solid Dark Slate Grey into Fluid */}
+        <div
+          className="absolute inset-y-0 left-0 w-32 sm:w-48 lg:w-64 bg-gradient-to-r from-[#183A37] via-[#183A37]/80 to-transparent pointer-events-none z-10"
+          aria-hidden="true"
+        />
+        <div
+          className="hidden lg:block absolute inset-y-0 left-0 w-28 sm:w-40 pointer-events-none z-20 backdrop-blur-[4px] [mask-image:linear-gradient(to_right,black_10%,transparent_100%)] [webkit-mask-image:linear-gradient(to_right,black_10%,transparent_100%)]"
+          aria-hidden="true"
         />
 
-        {/* Subtle Edge Vignettes to blend seamlessly */}
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-t lg:bg-gradient-to-r from-[#183A37]/80 via-transparent to-transparent opacity-60" />
+        {/* Top Fade for Mobile Stack */}
+        <div
+          className="lg:hidden absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#183A37] via-[#183A37]/80 to-transparent pointer-events-none z-10 backdrop-blur-[3px] [mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)] [webkit-mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)]"
+          aria-hidden="true"
+        />
       </div>
     </section>
   );

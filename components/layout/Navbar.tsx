@@ -53,74 +53,75 @@ export default function Navbar({
 
   return (
     <>
+      {/* Floating Compact Island Navbar (Small Horizontally) */}
       <header
         id="main-navbar"
-        className="sticky top-0 z-50 w-full bg-[#183A37] border-b border-cream/10 shadow-sm"
+        className="fixed top-4 sm:top-5 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[94vw] pointer-events-auto"
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3 sm:gap-5 px-3 sm:px-4 py-2 rounded-full bg-[#183A37]/85 backdrop-blur-md border border-cream/15 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
           {/* Brand Logo */}
           <button
             onClick={() => handleNavClick("home")}
             id="navbar-logo"
-            className="flex items-center gap-3 group cursor-pointer text-left"
+            className="flex items-center gap-2.5 group cursor-pointer text-left pl-1 sm:pl-2"
           >
             <div
-              className="w-8 h-8 rounded-xl bg-seagrass flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
-              style={{ boxShadow: "0 2px 10px rgba(97,152,142,0.3)" }}
+              className="w-7 h-7 rounded-lg bg-seagrass flex items-center justify-center transition-transform duration-300 group-hover:scale-105 flex-shrink-0"
+              style={{ boxShadow: "0 2px 8px rgba(97,152,142,0.3)" }}
             >
               <span className="text-cream font-sans font-bold text-xs tracking-wider">F</span>
             </div>
-            <span className="font-serif text-lg md:text-xl text-cream font-medium tracking-tight">
+            <span className="font-serif text-base sm:text-lg text-cream font-medium tracking-tight">
               FlipShift
             </span>
           </button>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
+          {/* Desktop Navigation Links (Compact horizontal pill) */}
+          <nav className="hidden md:flex items-center gap-1 sm:gap-2 px-2" aria-label="Main Navigation">
             {navItems.map((item) => {
               const isActive = activeView === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`relative font-sans text-xs uppercase tracking-[0.18em] font-medium transition-colors duration-200 py-1.5 cursor-pointer ${
-                    isActive ? "text-cream" : "text-cream/65 hover:text-cream"
+                  className={`relative px-3 py-1 rounded-full font-sans text-xs uppercase tracking-wider font-medium transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? "text-cream bg-white/10"
+                      : "text-cream/65 hover:text-cream hover:bg-white/5"
                   }`}
                   aria-current={isActive ? "page" : undefined}
                 >
                   {item.label}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNavIndicator"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-seagrass rounded-full"
-                      transition={{ type: "spring", stiffness: 400, damping: 35 }}
-                    />
-                  )}
                 </button>
               );
             })}
+          </nav>
 
+          {/* CTA Button */}
+          <div className="hidden sm:block">
             <Button
               variant="primary"
               size="sm"
               id="navbar-cta"
               onClick={handleCtaClick}
+              showIcon={false}
+              className="!py-1.5 !px-3.5 !text-xs whitespace-nowrap"
             >
               Join the waitlist
             </Button>
-          </nav>
+          </div>
 
           {/* Mobile Hamburger Button */}
           <button
             id="navbar-mobile-toggle"
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden w-10 h-10 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center cursor-pointer"
+            className="md:hidden w-8 h-8 rounded-full bg-white/10 border border-white/10 flex items-center justify-center cursor-pointer text-cream"
             aria-label="Toggle navigation menu"
           >
-            <div className="w-5 h-4 relative flex flex-col justify-between">
+            <div className="w-4 h-3 relative flex flex-col justify-between">
               <span
                 className={`w-full h-0.5 bg-cream rounded-full transition-transform duration-300 ${
-                  mobileOpen ? "translate-y-[7px] rotate-45" : ""
+                  mobileOpen ? "translate-y-[5px] rotate-45" : ""
                 }`}
               />
               <span
@@ -130,7 +131,7 @@ export default function Navbar({
               />
               <span
                 className={`w-full h-0.5 bg-cream rounded-full transition-transform duration-300 ${
-                  mobileOpen ? "-translate-y-[7px] -rotate-45" : ""
+                  mobileOpen ? "-translate-y-[5px] -rotate-45" : ""
                 }`}
               />
             </div>

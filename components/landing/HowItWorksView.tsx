@@ -42,11 +42,11 @@ export default function HowItWorksView({ onJoinWaitlist }: HowItWorksViewProps) 
     <section
       id="how-it-works-view"
       aria-label="How FlipShift Works"
-      className="relative w-full h-full min-h-[calc(100dvh-73px)] bg-[#183A37] text-cream flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-12 lg:py-16 overflow-y-auto"
+      className="relative w-full h-full min-h-[100dvh] bg-[#183A37] text-cream flex flex-col justify-start lg:justify-center px-6 sm:px-10 lg:px-16 pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-y-auto"
     >
-      <div className="max-w-6xl mx-auto w-full">
+      <div className="max-w-6xl mx-auto w-full my-auto">
         {/* Header (No Eyebrow Label) */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-12 mb-10 md:mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-12 mb-8 md:mb-12">
           <div className="max-w-xl">
             <h2 className="font-serif text-cream text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight leading-[1.15]">
               Your schedule goes in.
@@ -54,21 +54,21 @@ export default function HowItWorksView({ onJoinWaitlist }: HowItWorksViewProps) 
               Your plan comes out.
             </h2>
           </div>
-          <p className="font-sans text-cream/70 text-base sm:text-lg leading-relaxed max-w-md font-light">
+          <p className="font-sans text-cream/70 text-sm sm:text-base lg:text-lg leading-relaxed max-w-md font-light">
             No manual logging. No guesswork. FlipShift syncs directly with your roster
             so your biological clock is protected before your shift begins.
           </p>
         </div>
 
         {/* 3 Step Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mb-8 sm:mb-10">
           {steps.map((step, i) => (
             <div
               key={i}
-              className="relative rounded-2xl bg-[#121817]/40 border border-cream/12 p-6 sm:p-8 flex flex-col justify-between hover:border-cream/25 transition-all duration-300"
+              className="relative rounded-2xl bg-[#121817]/40 border border-cream/12 p-6 sm:p-7 lg:p-8 flex flex-col justify-between hover:border-cream/25 transition-all duration-300"
             >
               <div>
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-5 sm:mb-6">
                   <span className="font-serif text-2xl font-light text-seagrass">
                     {step.number}
                   </span>
@@ -77,7 +77,7 @@ export default function HowItWorksView({ onJoinWaitlist }: HowItWorksViewProps) 
                   </span>
                 </div>
 
-                <h3 className="font-serif text-cream text-xl sm:text-2xl font-medium tracking-tight mb-3">
+                <h3 className="font-serif text-cream text-xl sm:text-2xl font-medium tracking-tight mb-2.5">
                   {step.title}
                 </h3>
 
