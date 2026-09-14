@@ -79,9 +79,9 @@ export default function Button({
       whileTap={{ scale: 0.975 }}
       transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
       className={`
-        group relative rounded-full font-sans font-medium tracking-wide cursor-pointer
+        group relative !rounded-full overflow-hidden font-sans font-medium tracking-wide cursor-pointer
         inline-flex items-center justify-between
-        transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]
+        transition-all duration-300 ease-out
         disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
         ${variantStyles[variant]}
         ${currentSize.button}

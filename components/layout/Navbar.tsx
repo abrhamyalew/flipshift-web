@@ -25,7 +25,6 @@ export default function Navbar({
 }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Lock body scroll when mobile overlay is active
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
@@ -53,40 +52,40 @@ export default function Navbar({
 
   return (
     <>
-      {/* Floating Compact Island Navbar (Small Horizontally) */}
+      {/* Ultra-Slim Floating Island Navbar */}
       <header
         id="main-navbar"
-        className="fixed top-4 sm:top-5 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[94vw] pointer-events-auto"
+        className="fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[92vw] pointer-events-auto"
       >
-        <div className="flex items-center gap-3 sm:gap-5 px-3 sm:px-4 py-2 rounded-full bg-[#183A37]/85 backdrop-blur-md border border-cream/15 shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
+        <div className="flex items-center gap-2.5 sm:gap-4 px-3 sm:px-4 py-1.5 rounded-full bg-[#183A37]/90 backdrop-blur-md border border-cream/15 shadow-[0_6px_24px_rgba(0,0,0,0.4)]">
           {/* Brand Logo */}
           <button
             onClick={() => handleNavClick("home")}
             id="navbar-logo"
-            className="flex items-center gap-2.5 group cursor-pointer text-left pl-1 sm:pl-2"
+            className="flex items-center gap-2 group cursor-pointer text-left pl-1"
           >
             <div
-              className="w-7 h-7 rounded-lg bg-seagrass flex items-center justify-center transition-transform duration-300 group-hover:scale-105 flex-shrink-0"
-              style={{ boxShadow: "0 2px 8px rgba(97,152,142,0.3)" }}
+              className="w-6 h-6 rounded-md bg-seagrass flex items-center justify-center transition-transform duration-300 group-hover:scale-105 flex-shrink-0"
+              style={{ boxShadow: "0 2px 6px rgba(97,152,142,0.3)" }}
             >
-              <span className="text-cream font-sans font-bold text-xs tracking-wider">F</span>
+              <span className="text-cream font-sans font-bold text-[11px] tracking-wider">F</span>
             </div>
-            <span className="font-serif text-base sm:text-lg text-cream font-medium tracking-tight">
+            <span className="font-serif text-sm sm:text-base text-cream font-medium tracking-tight">
               FlipShift
             </span>
           </button>
 
-          {/* Desktop Navigation Links (Compact horizontal pill) */}
-          <nav className="hidden md:flex items-center gap-1 sm:gap-2 px-2" aria-label="Main Navigation">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-1 px-1" aria-label="Main Navigation">
             {navItems.map((item) => {
               const isActive = activeView === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`relative px-3 py-1 rounded-full font-sans text-xs uppercase tracking-wider font-medium transition-all duration-200 cursor-pointer ${
+                  className={`relative px-2.5 py-1 rounded-full font-sans text-[11px] uppercase tracking-wider font-medium transition-all duration-200 cursor-pointer ${
                     isActive
-                      ? "text-cream bg-white/10"
+                      ? "text-cream bg-white/12"
                       : "text-cream/65 hover:text-cream hover:bg-white/5"
                   }`}
                   aria-current={isActive ? "page" : undefined}
@@ -105,7 +104,7 @@ export default function Navbar({
               id="navbar-cta"
               onClick={handleCtaClick}
               showIcon={false}
-              className="!py-1.5 !px-3.5 !text-xs whitespace-nowrap"
+              className="!py-1 !px-3 !text-[11px] whitespace-nowrap !rounded-full"
             >
               Join the waitlist
             </Button>
@@ -115,13 +114,13 @@ export default function Navbar({
           <button
             id="navbar-mobile-toggle"
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden w-8 h-8 rounded-full bg-white/10 border border-white/10 flex items-center justify-center cursor-pointer text-cream"
+            className="md:hidden w-7 h-7 rounded-full bg-white/10 border border-white/10 flex items-center justify-center cursor-pointer text-cream"
             aria-label="Toggle navigation menu"
           >
-            <div className="w-4 h-3 relative flex flex-col justify-between">
+            <div className="w-3.5 h-2.5 relative flex flex-col justify-between">
               <span
                 className={`w-full h-0.5 bg-cream rounded-full transition-transform duration-300 ${
-                  mobileOpen ? "translate-y-[5px] rotate-45" : ""
+                  mobileOpen ? "translate-y-[4px] rotate-45" : ""
                 }`}
               />
               <span
@@ -131,7 +130,7 @@ export default function Navbar({
               />
               <span
                 className={`w-full h-0.5 bg-cream rounded-full transition-transform duration-300 ${
-                  mobileOpen ? "-translate-y-[5px] -rotate-45" : ""
+                  mobileOpen ? "-translate-y-[4px] -rotate-45" : ""
                 }`}
               />
             </div>
@@ -152,10 +151,10 @@ export default function Navbar({
           >
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-6 right-6 w-12 h-12 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-cream cursor-pointer"
+              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 border border-white/10 flex items-center justify-center text-cream cursor-pointer"
               aria-label="Close menu"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -173,7 +172,7 @@ export default function Navbar({
                   >
                     <button
                       onClick={() => handleNavClick(item.id)}
-                      className={`font-serif text-3xl font-medium tracking-tight cursor-pointer ${
+                      className={`font-serif text-2xl font-medium tracking-tight cursor-pointer ${
                         isActive ? "text-seagrass" : "text-cream hover:text-seagrass"
                       } transition-colors`}
                     >
@@ -193,7 +192,7 @@ export default function Navbar({
             >
               <Button
                 variant="primary"
-                size="lg"
+                size="md"
                 onClick={handleCtaClick}
               >
                 Join the waitlist

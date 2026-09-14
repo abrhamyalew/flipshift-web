@@ -10,16 +10,16 @@ export default function HomeView() {
       aria-label="FlipShift Home"
       className="relative w-full h-full min-h-[100dvh] flex flex-col lg:flex-row items-stretch justify-between bg-[#183A37] text-cream overflow-y-auto lg:overflow-hidden"
     >
-      {/* Left Column: Eyebrow-Free Headline, Supporting Copy, Waitlist */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-10 lg:px-14 xl:px-18 pt-24 sm:pt-28 lg:pt-16 pb-12 z-20 my-auto">
-        <div className="max-w-xl">
-          <h1 className="font-serif text-cream text-3xl sm:text-4xl lg:text-[44px] xl:text-5xl font-normal leading-[1.12] tracking-tight mb-5">
+      {/* Left Column: Eyebrow-Free Headline, Scaled-Down Body, Waitlist */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-10 lg:px-14 xl:px-16 pt-24 sm:pt-28 lg:pt-32 pb-10 z-20">
+        <div className="max-w-md xl:max-w-lg">
+          <h1 className="font-serif text-cream text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-normal leading-[1.18] tracking-tight mb-4">
             Your schedule rotates.
             <br />
             Your body doesn&apos;t have to guess.
           </h1>
 
-          <p className="font-sans text-cream/75 text-sm sm:text-base lg:text-lg leading-relaxed mb-7 max-w-lg font-light">
+          <p className="font-sans text-cream/75 text-sm sm:text-[15px] leading-relaxed mb-6 max-w-md font-light">
             FlipShift reads your actual work schedule and builds a daily
             circadian plan around it. Sleep timing, light exposure, caffeine
             cutoffs, alertness forecasts. Specific to your next shift, not
@@ -33,7 +33,7 @@ export default function HomeView() {
       </div>
 
       {/* Right Column: Seamless Blurred Transition from Solid into Fluid Animation */}
-      <div className="w-full lg:w-1/2 relative min-h-[380px] lg:min-h-full flex-1 overflow-hidden">
+      <div className="w-full lg:w-1/2 relative min-h-[360px] lg:min-h-full flex-1 overflow-hidden">
         {/* Soft Feathered Mask on the Fluid Shader Container */}
         <div
           className="absolute inset-0 w-full h-full"
@@ -44,10 +44,7 @@ export default function HomeView() {
               "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 8%, rgba(0,0,0,0.5) 20%, rgba(0,0,0,0.9) 35%, black 48%)",
           }}
         >
-          <SmokeShader
-            className="w-full h-full cursor-crosshair"
-            interactive={true}
-          />
+          <SmokeShader className="w-full h-full pointer-events-none" />
         </div>
 
         {/* Soft Organic Blur / Gradient Feather from Solid Dark Slate Grey into Fluid */}

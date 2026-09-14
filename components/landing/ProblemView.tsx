@@ -56,37 +56,37 @@ export default function ProblemView() {
     <section
       id="problem-view"
       aria-label="Shift Work Problems"
-      className="relative w-full h-full min-h-[100dvh] bg-[#EEF1BD] text-[#183A37] flex flex-col justify-start lg:justify-center px-6 sm:px-10 lg:px-16 pt-24 sm:pt-28 pb-12 sm:pb-16 overflow-y-auto"
+      className="relative w-full h-full min-h-[100dvh] bg-[#EEF1BD] text-[#183A37] flex flex-col justify-start px-6 sm:px-10 lg:px-16 pt-24 sm:pt-28 lg:pt-32 pb-12 overflow-y-auto"
     >
-      <div className="max-w-6xl mx-auto w-full my-auto">
+      <div className="max-w-5xl mx-auto w-full">
         {/* Header (No Eyebrow Label) */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-12 mb-8 md:mb-12">
-          <div className="max-w-xl">
-            <h2 className="font-serif text-[#183A37] text-3xl sm:text-4xl lg:text-5xl font-normal tracking-tight leading-[1.15]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-10 mb-8 md:mb-10">
+          <div className="max-w-lg">
+            <h2 className="font-serif text-[#183A37] text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-normal tracking-tight leading-[1.18]">
               Generic sleep apps were not built for this.
             </h2>
           </div>
-          <p className="font-sans text-[#60495A] text-sm sm:text-base lg:text-lg leading-relaxed max-w-md font-normal">
+          <p className="font-sans text-[#60495A] text-sm sm:text-[15px] leading-relaxed max-w-md font-normal">
             Shift work is a fundamentally different relationship with your
             circadian rhythm. It requires tools built by people who have actually lived it.
           </p>
         </div>
 
         {/* 4 Pain Points Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {problems.map((problem, i) => (
             <div
               key={i}
-              className="rounded-2xl bg-[#F7F9E8] border border-[#183A37]/10 p-5 sm:p-7 lg:p-8 flex flex-col justify-between shadow-[0_4px_24px_rgba(24,58,55,0.06)] hover:border-[#183A37]/20 transition-all duration-300"
+              className="rounded-2xl bg-[#F7F9E8] border border-[#183A37]/10 p-5 sm:p-6 flex flex-col justify-between shadow-[0_4px_24px_rgba(24,58,55,0.06)] hover:border-[#183A37]/20 transition-all duration-300"
             >
               <div>
-                <div className="w-10 h-10 rounded-xl bg-[#61988E]/15 text-[#183A37] flex items-center justify-center mb-4 sm:mb-5">
+                <div className="w-9 h-9 rounded-xl bg-[#61988E]/15 text-[#183A37] flex items-center justify-center mb-4">
                   {problem.icon}
                 </div>
-                <h3 className="font-serif text-[#183A37] text-xl sm:text-2xl font-medium tracking-tight mb-2.5">
+                <h3 className="font-serif text-[#183A37] text-lg sm:text-xl font-medium tracking-tight mb-2">
                   {problem.title}
                 </h3>
-                <p className="font-sans text-[#60495A] text-sm sm:text-base leading-relaxed">
+                <p className="font-sans text-[#60495A] text-xs sm:text-sm leading-relaxed">
                   {problem.description}
                 </p>
               </div>

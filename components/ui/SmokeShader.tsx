@@ -10,7 +10,6 @@ interface SmokeShaderProps {
     crest?: [number, number, number];
     filament?: [number, number, number];
   };
-  interactive?: boolean;
 }
 
 // Full-screen vertex shader
@@ -30,7 +29,6 @@ precision highp float;
 
 uniform vec2 u_resolution;
 uniform float u_time;
-uniform float u_intensity;
 
 uniform vec3 u_color_ground;
 uniform vec3 u_color_trough;
@@ -76,14 +74,14 @@ float fbm(vec2 p) {
 }
 
 // Two-level domain warp with fluid dynamics
-vec2 domainWarp(vec2 p, float t, out vec2 q, out vec2 r, float intensity) {
+vec2 domainWarp(vec2 p, float t, out vec2 q, out vec2 r) {
   // First warp level
   q = vec2(
     fbm(p + vec2(0.0, 0.0) + vec2(0.05 * t, 0.035 * t)),
     fbm(p + vec2(5.2, 1.3) + vec2(-0.045 * t, 0.055 * t))
   );
 
-  float warpScale = 3.4 + 0.8 * intensity;
+  float warpScale = 3.6;
 
   // Second warp level
   r = vec2(
@@ -91,7 +89,7 @@ vec2 domainWarp(vec2 p, float t, out vec2 q, out vec2 r, float intensity) {
     fbm(p + warpScale * q + vec2(8.3, 2.8) + vec2(-0.06 * t, 0.08 * t))
   );
 
-  return p + (3.8 + 1.0 * intensity) * r;
+  return p + 4.0 * r;
 }
 
 void main() {
@@ -100,11 +98,12 @@ void main() {
   float aspect = u_resolution.x / u_resolution.y;
   vec2 p = (uv - 0.5) * vec2(aspect, 1.0) * 1.7;
 
+  // Smooth autonomous time progression at the desired steady speed
   float t = u_time * 0.32;
 
   vec2 q = vec2(0.0);
   vec2 r = vec2(0.0);
-  vec2 warpedP = domainWarp(p, t, q, r, u_intensity);
+  vec2 warpedP = domainWarp(p, t, q, r);
 
   // Compute base density via fbm of final warped coordinate
   float f = fbm(warpedP);
@@ -116,8 +115,8 @@ void main() {
 
   // Filament highlight from warp vector magnitude
   float warpMag = length(r);
-  float filament = smoothstep(0.32 - 0.08 * u_intensity, 1.25, warpMag);
-  filament = pow(filament, 2.5) * (1.2 + 0.6 * u_intensity);
+  float filament = smoothstep(0.32, 1.25, warpMag);
+  filament = pow(filament, 2.5) * 1.3;
 
   // Color composition
   vec3 col = mix(u_color_ground, u_color_trough, smoothstep(0.0, 0.42, contrastF));
@@ -140,7 +139,6 @@ export default function SmokeShader({
     crest: [0.380, 0.596, 0.557],    // #61988E Seagrass Crests
     filament: [0.933, 0.945, 0.741], // #EEF1BD Cream Highlights
   },
-  interactive = true,
 }: SmokeShaderProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -148,7 +146,6 @@ export default function SmokeShader({
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const container = containerRef.current || canvas?.parentElement;
     if (!canvas) return;
 
     // Check WebGL support
@@ -214,7 +211,6 @@ export default function SmokeShader({
     // Get Uniform Locations
     const uResolution = gl.getUniformLocation(program, "u_resolution");
     const uTime = gl.getUniformLocation(program, "u_time");
-    const uIntensity = gl.getUniformLocation(program, "u_intensity");
     const uColorGround = gl.getUniformLocation(program, "u_color_ground");
     const uColorTrough = gl.getUniformLocation(program, "u_color_trough");
     const uColorCrest = gl.getUniformLocation(program, "u_color_crest");
@@ -244,30 +240,6 @@ export default function SmokeShader({
     resize();
     window.addEventListener("resize", resize);
 
-    // Pointer intensity dynamics
-    let targetIntensity = 0.0;
-    let currentIntensity = 0.0;
-    let pointerDecayTimer: ReturnType<typeof setTimeout> | null = null;
-
-    function handlePointerMove() {
-      if (!interactive) return;
-      targetIntensity = 1.0;
-      if (pointerDecayTimer) clearTimeout(pointerDecayTimer);
-      pointerDecayTimer = setTimeout(() => {
-        targetIntensity = 0.0;
-      }, 1000);
-    }
-
-    function handlePointerLeave() {
-      if (!interactive) return;
-      targetIntensity = 0.0;
-    }
-
-    if (interactive && container) {
-      container.addEventListener("pointermove", handlePointerMove);
-      container.addEventListener("pointerleave", handlePointerLeave);
-    }
-
     // Check reduced motion
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -279,12 +251,8 @@ export default function SmokeShader({
     function render(now: number) {
       const elapsed = (now - startTime) * 0.001;
 
-      // Smooth intensity interpolation
-      currentIntensity += (targetIntensity - currentIntensity) * 0.05;
-
       gl.uniform2f(uResolution, currentCanvas.width, currentCanvas.height);
       gl.uniform1f(uTime, prefersReducedMotion ? 1.5 : elapsed);
-      gl.uniform1f(uIntensity, currentIntensity);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
 
@@ -309,16 +277,11 @@ export default function SmokeShader({
 
     return () => {
       cancelAnimationFrame(animFrameId);
-      if (pointerDecayTimer) clearTimeout(pointerDecayTimer);
       window.removeEventListener("resize", resize);
-      if (interactive && container) {
-        container.removeEventListener("pointermove", handlePointerMove);
-        container.removeEventListener("pointerleave", handlePointerLeave);
-      }
       currentCanvas.removeEventListener("webglcontextlost", onContextLost);
       currentCanvas.removeEventListener("webglcontextrestored", onContextRestored);
     };
-  }, [palette, interactive]);
+  }, [palette]);
 
   return (
     <div ref={containerRef} className={`relative overflow-hidden ${className}`}>
@@ -333,7 +296,7 @@ export default function SmokeShader({
       {/* WebGL Canvas */}
       <canvas
         ref={canvasRef}
-        className="w-full h-full block"
+        className="w-full h-full block pointer-events-none"
         style={{ display: webglSupported ? "block" : "none" }}
         aria-hidden="true"
       />

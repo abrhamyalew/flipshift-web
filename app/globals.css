@@ -156,7 +156,6 @@ p, li, span, label, input, button, a {
 :focus-visible {
   outline: 2px solid var(--seagrass);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 /* ===== Section Variants ===== */
