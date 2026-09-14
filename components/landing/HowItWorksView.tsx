@@ -46,7 +46,7 @@ export default function HowItWorksView({
     <section
       id="how-it-works-view"
       aria-label="How FlipShift Works"
-      className="relative w-full h-full min-h-[100dvh] max-h-[100dvh] bg-[#183A37] text-cream flex flex-col justify-between px-6 sm:px-12 lg:px-20 py-5 sm:py-7 overflow-hidden"
+      className="relative w-full h-full min-h-[100dvh] max-h-[100dvh] bg-[#183A37] text-cream flex flex-col justify-between px-5 sm:px-10 lg:px-16 py-4 sm:py-6 overflow-y-auto lg:overflow-hidden overscroll-contain"
     >
       {/* Top: Header Row */}
       <div className="flex items-center justify-between flex-shrink-0">
@@ -73,31 +73,31 @@ export default function HowItWorksView({
       </div>
 
       {/* Center: Title and 3 Step Cards */}
-      <div className="my-auto py-1 sm:py-2 max-w-5xl mx-auto w-full">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-2.5 md:gap-8 mb-4 sm:mb-5">
+      <div className="my-auto py-1 max-w-5xl mx-auto w-full">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-1.5 md:gap-6 mb-3 sm:mb-4">
           <div className="max-w-xl">
-            <h2 className="font-serif text-cream text-2xl sm:text-3xl lg:text-[32px] font-normal tracking-tight leading-[1.16]">
+            <h2 className="font-serif text-cream text-xl sm:text-2xl lg:text-[28px] xl:text-[30px] font-normal tracking-tight leading-[1.16]">
               Your schedule goes in.
               <br />
               Your plan comes out.
             </h2>
           </div>
-          <p className="font-sans text-cream/70 text-xs sm:text-[13px] leading-relaxed max-w-md font-light">
+          <p className="font-sans text-cream/70 text-[11px] sm:text-xs leading-relaxed max-w-md font-light">
             No manual logging. No guesswork. FlipShift syncs directly with your roster
             so your biological clock is protected before your shift begins.
           </p>
         </div>
 
         {/* 3 Step Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3.5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-3">
           {steps.map((step, i) => (
             <div
               key={i}
-              className="relative rounded-xl bg-[#121817]/40 border border-cream/12 p-3.5 sm:p-4 lg:p-4.5 flex flex-col justify-between hover:border-cream/25 transition-all duration-300"
+              className="relative rounded-xl bg-[#121817]/40 border border-cream/12 p-3 sm:p-3.5 lg:p-4 flex flex-col justify-between hover:border-cream/25 transition-all duration-300"
             >
               <div>
-                <div className="flex items-center justify-between mb-2.5">
-                  <span className="font-serif text-lg font-light text-seagrass">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-serif text-base font-light text-seagrass">
                     {step.number}
                   </span>
                   <span className="font-sans text-[9px] uppercase tracking-wider text-cream/60 px-2 py-0.5 rounded-full border border-cream/15 bg-cream/5">
@@ -105,11 +105,11 @@ export default function HowItWorksView({
                   </span>
                 </div>
 
-                <h3 className="font-serif text-cream text-sm sm:text-base font-medium tracking-tight mb-1">
+                <h3 className="font-serif text-cream text-xs sm:text-sm font-medium tracking-tight mb-1">
                   {step.title}
                 </h3>
 
-                <p className="font-sans text-cream/70 text-xs sm:text-[13px] leading-relaxed font-light">
+                <p className="font-sans text-cream/70 text-[11px] sm:text-xs leading-relaxed font-light">
                   {step.description}
                 </p>
               </div>
@@ -125,7 +125,7 @@ export default function HowItWorksView({
           className="group flex items-center gap-1.5 text-xs uppercase tracking-wider font-sans font-medium text-cream/60 hover:text-cream transition-colors cursor-pointer"
         >
           <svg
-            className="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-0.5 text-seagrass"
+            className="w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 text-seagrass"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

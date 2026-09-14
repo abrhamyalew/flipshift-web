@@ -12,31 +12,29 @@ export default function HomeView({ onGoToProblem }: HomeViewProps) {
     <section
       id="home-view"
       aria-label="FlipShift Home"
-      className="relative w-full h-full min-h-[100dvh] max-h-[100dvh] flex flex-col lg:flex-row items-stretch justify-between bg-[#183A37] text-cream overflow-hidden"
+      className="relative w-full h-full min-h-[100dvh] max-h-[100dvh] flex flex-col lg:flex-row items-stretch justify-between bg-[#183A37] text-cream overflow-y-auto lg:overflow-hidden overscroll-contain"
     >
       {/* Left Column: Brand Logo, Headline, Supporting Copy, Waitlist, and Next Arrow */}
-      <div className="w-full lg:w-[52%] xl:w-[50%] h-full flex flex-col justify-between px-6 sm:px-12 lg:px-16 xl:px-20 py-6 sm:py-8 lg:py-10 z-20 overflow-hidden">
+      <div className="w-full lg:w-[56%] xl:w-[52%] h-full flex flex-col justify-between px-6 sm:px-10 lg:px-14 xl:px-16 py-5 sm:py-7 lg:py-8 z-20">
         {/* Top: Brand Logo */}
         <div className="flex items-center gap-2.5 flex-shrink-0">
           <div
-            className="w-7 h-7 rounded-lg bg-seagrass flex items-center justify-center shadow-[0_2px_8px_rgba(97,152,142,0.3)]"
+            className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-seagrass flex items-center justify-center shadow-[0_2px_8px_rgba(97,152,142,0.3)]"
           >
             <span className="text-cream font-sans font-bold text-xs tracking-wider">F</span>
           </div>
-          <span className="font-serif text-lg sm:text-xl text-cream font-medium tracking-tight">
+          <span className="font-serif text-base sm:text-lg text-cream font-medium tracking-tight">
             FlipShift
           </span>
         </div>
 
         {/* Center: Headline, Body, and Waitlist Form */}
-        <div className="my-auto py-3 sm:py-4 max-w-xl">
-          <h1 className="font-serif text-cream text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-normal leading-[1.18] tracking-tight mb-3 sm:mb-4">
-            Your schedule rotates.
-            <br />
-            Your body doesn&apos;t have to guess.
+        <div className="my-auto py-2 sm:py-3 max-w-lg">
+          <h1 className="font-serif text-cream text-2xl sm:text-3xl lg:text-[32px] xl:text-[35px] font-normal leading-[1.18] tracking-tight mb-3">
+            Your schedule rotates. Your body doesn&apos;t have to guess.
           </h1>
 
-          <p className="font-sans text-cream/75 text-xs sm:text-sm md:text-[15px] leading-relaxed mb-5 max-w-md font-light">
+          <p className="font-sans text-cream/75 text-xs sm:text-sm leading-relaxed mb-4 max-w-md font-light">
             FlipShift reads your actual work schedule and builds a daily
             circadian plan around it. Sleep timing, light exposure, caffeine
             cutoffs, alertness forecasts. Specific to your next shift, not
@@ -57,7 +55,7 @@ export default function HomeView({ onGoToProblem }: HomeViewProps) {
           >
             <span>The shift reality</span>
             <svg
-              className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5 text-seagrass"
+              className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-y-0.5 text-seagrass"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -74,7 +72,7 @@ export default function HomeView({ onGoToProblem }: HomeViewProps) {
       </div>
 
       {/* Right Column: Fluid Animation strictly on desktop, hidden on mobile */}
-      <div className="hidden lg:block lg:w-[48%] xl:w-[50%] relative h-full flex-1 overflow-hidden">
+      <div className="hidden lg:block lg:w-[44%] xl:w-[48%] relative h-full flex-1 overflow-hidden">
         {/* Soft Feathered Mask on the Fluid Shader Container */}
         <div
           className="absolute inset-0 w-full h-full"

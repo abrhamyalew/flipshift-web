@@ -33,10 +33,24 @@ const viewVariants: Variants = {
   }),
 };
 
+function getScrollParent(el: HTMLElement | null): HTMLElement | null {
+  while (el && el !== document.body) {
+    if (el.scrollHeight > el.clientHeight + 4) {
+      const overflowY = window.getComputedStyle(el).overflowY;
+      if (overflowY === "auto" || overflowY === "scroll") {
+        return el;
+      }
+    }
+    el = el.parentElement;
+  }
+  return null;
+}
+
 export default function LandingPage() {
   const [activeView, setActiveView] = useState<ViewType>("home");
   const [direction, setDirection] = useState<number>(1);
   const touchStartY = useRef<number | null>(null);
+  const touchTarget = useRef<HTMLElement | null>(null);
   const isWheelLocked = useRef<boolean>(false);
 
   // Switch view with directional animation
@@ -88,7 +102,7 @@ export default function LandingPage() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  // Keyboard navigation: ArrowDown, ArrowUp, ArrowRight, ArrowLeft, PageDown, PageUp
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
@@ -111,12 +125,30 @@ export default function LandingPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goToNext, goToPrev]);
 
-  // Mouse wheel scroll navigation (smoothly advances or backs up one section per scroll)
+  // Mouse wheel scroll navigation with container scroll awareness
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      // Don't intercept if user is scrolling inside an element or typing
       if (isWheelLocked.current) return;
       if (Math.abs(e.deltaY) < 20) return;
+
+      const target = e.target as HTMLElement | null;
+      const scrollable = getScrollParent(target);
+
+      if (scrollable) {
+        const atBottom =
+          scrollable.scrollTop + scrollable.clientHeight >=
+          scrollable.scrollHeight - 8;
+        const atTop = scrollable.scrollTop <= 8;
+
+        if (e.deltaY > 0 && !atBottom) {
+          // Allow internal scrolling down without jumping page
+          return;
+        }
+        if (e.deltaY < 0 && !atTop) {
+          // Allow internal scrolling up without jumping page
+          return;
+        }
+      }
 
       if (e.deltaY > 0) {
         isWheelLocked.current = true;
@@ -137,10 +169,11 @@ export default function LandingPage() {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [goToNext, goToPrev]);
 
-  // Touch swipe support on mobile
+  // Touch swipe support on mobile with container scroll awareness
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY.current = e.touches[0].clientY;
+      touchTarget.current = e.target as HTMLElement | null;
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
@@ -149,7 +182,25 @@ export default function LandingPage() {
       const deltaY = touchStartY.current - touchEndY;
       touchStartY.current = null;
 
-      if (Math.abs(deltaY) > 40) {
+      if (Math.abs(deltaY) > 45) {
+        const scrollable = getScrollParent(touchTarget.current);
+
+        if (scrollable) {
+          const atBottom =
+            scrollable.scrollTop + scrollable.clientHeight >=
+            scrollable.scrollHeight - 12;
+          const atTop = scrollable.scrollTop <= 12;
+
+          if (deltaY > 0 && !atBottom) {
+            // Swiping up to scroll down inside the cards, do not jump page
+            return;
+          }
+          if (deltaY < 0 && !atTop) {
+            // Swiping down to scroll up inside the cards, do not jump page
+            return;
+          }
+        }
+
         if (deltaY > 0) {
           goToNext();
         } else {
@@ -183,7 +234,7 @@ export default function LandingPage() {
       {/* Floating Side Pagination Indicator */}
       <nav
         aria-label="View Pagination"
-        className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-3 bg-[#121817]/40 backdrop-blur-md border border-cream/10 rounded-full px-2 py-3.5 shadow-lg"
+        className="fixed right-3 sm:right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-3 bg-[#121817]/50 backdrop-blur-md border border-cream/10 rounded-full px-2 py-3.5 shadow-lg"
       >
         {VIEWS.map((viewName) => {
           const isActive = activeView === viewName;

@@ -152,7 +152,7 @@ export default function WaitlistCapture({
                 placeholder="you@example.com"
                 aria-label="Email address"
                 className={`
-                  flex-1 px-6 py-3.5 rounded-full font-sans text-base
+                  flex-1 px-4 sm:px-5 py-2.5 rounded-full font-sans text-xs sm:text-sm
                   transition-smooth outline-none
                   ${
                     isDark
@@ -165,15 +165,15 @@ export default function WaitlistCapture({
               <Button
                 type="submit"
                 variant="primary"
-                size="md"
+                size="sm"
                 disabled={state === "loading"}
                 id="waitlist-submit-button"
-                className="whitespace-nowrap"
+                className="whitespace-nowrap !py-2.5 !px-4 !text-xs !rounded-full"
               >
                 {state === "loading" ? (
                   <span className="flex items-center gap-2">
                     <svg
-                      className="animate-spin w-4 h-4"
+                      className="animate-spin w-3.5 h-3.5"
                       viewBox="0 0 24 24"
                       fill="none"
                     >
@@ -203,13 +203,13 @@ export default function WaitlistCapture({
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
-                className="mt-3 flex items-center gap-2"
+                className="mt-2 flex items-center gap-2"
               >
-                <span className="text-amber-200 text-sm">{errorMessage}</span>
+                <span className="text-amber-200 text-xs">{errorMessage}</span>
                 <button
                   type="button"
                   onClick={handleRetry}
-                  className="text-sm text-seagrass underline underline-offset-2 hover:text-seagrass-light cursor-pointer"
+                  className="text-xs text-seagrass underline underline-offset-2 hover:text-seagrass-light cursor-pointer"
                 >
                   Retry
                 </button>
@@ -217,7 +217,7 @@ export default function WaitlistCapture({
             )}
 
             <p
-              className={`text-sm mt-3 ${isDark ? "text-cream/50" : "text-mauve/70"}`}
+              className={`text-[11px] sm:text-xs mt-2 ${isDark ? "text-cream/45" : "text-mauve/65"}`}
             >
               Get early access and founding pricing. No spam, ever.
             </p>
