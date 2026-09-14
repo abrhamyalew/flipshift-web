@@ -46,11 +46,11 @@ export default function HowItWorksView({
     <section
       id="how-it-works-view"
       aria-label="How FlipShift Works"
-      className="relative w-full h-full min-h-[100dvh] max-h-[100dvh] bg-[#183A37] text-cream flex flex-col justify-between px-6 sm:px-12 lg:px-20 py-7 sm:py-9 overflow-hidden"
+      className="relative w-full h-full min-h-[100dvh] max-h-[100dvh] bg-[#183A37] text-cream flex flex-col justify-between px-6 sm:px-12 lg:px-20 py-5 sm:py-7 overflow-hidden"
     >
       {/* Top: Header Row */}
-      <div className="flex items-center justify-between">
-        <span className="font-sans text-xs uppercase tracking-widest font-semibold text-cream/60">
+      <div className="flex items-center justify-between flex-shrink-0">
+        <span className="font-sans text-[11px] uppercase tracking-widest font-semibold text-cream/60">
           03 / How It Works
         </span>
 
@@ -73,43 +73,43 @@ export default function HowItWorksView({
       </div>
 
       {/* Center: Title and 3 Step Cards */}
-      <div className="my-auto py-2 max-w-6xl mx-auto w-full">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 md:gap-8 mb-6">
+      <div className="my-auto py-1 sm:py-2 max-w-5xl mx-auto w-full">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-2.5 md:gap-8 mb-4 sm:mb-5">
           <div className="max-w-xl">
-            <h2 className="font-serif text-cream text-2xl sm:text-3xl lg:text-[36px] xl:text-[40px] font-normal tracking-tight leading-[1.15]">
+            <h2 className="font-serif text-cream text-2xl sm:text-3xl lg:text-[32px] font-normal tracking-tight leading-[1.16]">
               Your schedule goes in.
               <br />
               Your plan comes out.
             </h2>
           </div>
-          <p className="font-sans text-cream/70 text-xs sm:text-sm md:text-[15px] leading-relaxed max-w-md font-light">
+          <p className="font-sans text-cream/70 text-xs sm:text-[13px] leading-relaxed max-w-md font-light">
             No manual logging. No guesswork. FlipShift syncs directly with your roster
             so your biological clock is protected before your shift begins.
           </p>
         </div>
 
         {/* 3 Step Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3.5">
           {steps.map((step, i) => (
             <div
               key={i}
-              className="relative rounded-2xl bg-[#121817]/40 border border-cream/12 p-4 sm:p-5 lg:p-6 flex flex-col justify-between hover:border-cream/25 transition-all duration-300"
+              className="relative rounded-xl bg-[#121817]/40 border border-cream/12 p-3.5 sm:p-4 lg:p-4.5 flex flex-col justify-between hover:border-cream/25 transition-all duration-300"
             >
               <div>
-                <div className="flex items-center justify-between mb-3.5">
-                  <span className="font-serif text-xl font-light text-seagrass">
+                <div className="flex items-center justify-between mb-2.5">
+                  <span className="font-serif text-lg font-light text-seagrass">
                     {step.number}
                   </span>
-                  <span className="font-sans text-[10px] uppercase tracking-wider text-cream/60 px-2 py-0.5 rounded-full border border-cream/15 bg-cream/5">
+                  <span className="font-sans text-[9px] uppercase tracking-wider text-cream/60 px-2 py-0.5 rounded-full border border-cream/15 bg-cream/5">
                     {step.badge}
                   </span>
                 </div>
 
-                <h3 className="font-serif text-cream text-base sm:text-lg font-medium tracking-tight mb-2">
+                <h3 className="font-serif text-cream text-sm sm:text-base font-medium tracking-tight mb-1">
                   {step.title}
                 </h3>
 
-                <p className="font-sans text-cream/70 text-xs sm:text-sm leading-relaxed font-light">
+                <p className="font-sans text-cream/70 text-xs sm:text-[13px] leading-relaxed font-light">
                   {step.description}
                 </p>
               </div>
@@ -119,7 +119,7 @@ export default function HowItWorksView({
       </div>
 
       {/* Bottom: Action Bar with Previous Button and Waitlist CTA */}
-      <div className="flex items-center justify-between pt-2 border-t border-cream/10">
+      <div className="flex items-center justify-between flex-shrink-0 pt-2 pb-1 border-t border-cream/10">
         <button
           onClick={onGoToProblem}
           className="group flex items-center gap-1.5 text-xs uppercase tracking-wider font-sans font-medium text-cream/60 hover:text-cream transition-colors cursor-pointer"
@@ -141,7 +141,7 @@ export default function HowItWorksView({
           size="sm"
           id="how-it-works-waitlist-cta"
           onClick={onJoinWaitlist}
-          className="!py-1.5 !px-4 !text-xs !rounded-full"
+          className="!py-1.5 !px-3.5 !text-xs !rounded-full"
         >
           Join the waitlist
         </Button>

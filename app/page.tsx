@@ -37,7 +37,7 @@ export default function LandingPage() {
   const [activeView, setActiveView] = useState<ViewType>("home");
   const [direction, setDirection] = useState<number>(1);
   const touchStartY = useRef<number | null>(null);
-  const isTransitioning = useRef<boolean>(false);
+  const isWheelLocked = useRef<boolean>(false);
 
   // Switch view with directional animation
   const goToView = useCallback(
@@ -91,7 +91,6 @@ export default function LandingPage() {
   // Keyboard navigation: ArrowDown, ArrowUp, ArrowRight, ArrowLeft, PageDown, PageUp
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't intercept keyboard events if user is typing in an input
       if (
         e.target instanceof HTMLInputElement ||
         e.target instanceof HTMLTextAreaElement
@@ -112,6 +111,32 @@ export default function LandingPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goToNext, goToPrev]);
 
+  // Mouse wheel scroll navigation (smoothly advances or backs up one section per scroll)
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      // Don't intercept if user is scrolling inside an element or typing
+      if (isWheelLocked.current) return;
+      if (Math.abs(e.deltaY) < 20) return;
+
+      if (e.deltaY > 0) {
+        isWheelLocked.current = true;
+        goToNext();
+        setTimeout(() => {
+          isWheelLocked.current = false;
+        }, 600);
+      } else if (e.deltaY < 0) {
+        isWheelLocked.current = true;
+        goToPrev();
+        setTimeout(() => {
+          isWheelLocked.current = false;
+        }, 600);
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [goToNext, goToPrev]);
+
   // Touch swipe support on mobile
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
@@ -124,8 +149,7 @@ export default function LandingPage() {
       const deltaY = touchStartY.current - touchEndY;
       touchStartY.current = null;
 
-      // Threshold of 50px for swipe gesture
-      if (Math.abs(deltaY) > 50) {
+      if (Math.abs(deltaY) > 40) {
         if (deltaY > 0) {
           goToNext();
         } else {
@@ -159,9 +183,9 @@ export default function LandingPage() {
       {/* Floating Side Pagination Indicator */}
       <nav
         aria-label="View Pagination"
-        className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-3 bg-[#121817]/40 backdrop-blur-md border border-cream/10 rounded-full px-2 py-3.5"
+        className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-3 bg-[#121817]/40 backdrop-blur-md border border-cream/10 rounded-full px-2 py-3.5 shadow-lg"
       >
-        {VIEWS.map((viewName, idx) => {
+        {VIEWS.map((viewName) => {
           const isActive = activeView === viewName;
           const labels: Record<ViewType, string> = {
             home: "01 Home",
@@ -191,13 +215,6 @@ export default function LandingPage() {
           );
         })}
       </nav>
-
-      {/* Floating Keyboard Hint (discreet, bottom-left) */}
-      <div className="hidden md:flex items-center gap-2 fixed bottom-4 left-6 z-40 text-cream/40 text-[11px] font-sans pointer-events-none">
-        <span className="px-1.5 py-0.5 rounded border border-cream/20 bg-cream/5 font-mono text-[10px]">
-          Use keyboard arrows ↑ ↓ to navigate
-        </span>
-      </div>
 
       {/* Main Full-Viewport Animated View Stage */}
       <main id="main-content" className="w-full h-full relative overflow-hidden">

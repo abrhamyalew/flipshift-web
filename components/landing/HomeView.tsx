@@ -15,9 +15,9 @@ export default function HomeView({ onGoToProblem }: HomeViewProps) {
       className="relative w-full h-full min-h-[100dvh] max-h-[100dvh] flex flex-col lg:flex-row items-stretch justify-between bg-[#183A37] text-cream overflow-hidden"
     >
       {/* Left Column: Brand Logo, Headline, Supporting Copy, Waitlist, and Next Arrow */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-between px-6 sm:px-12 lg:px-16 xl:px-20 py-8 sm:py-10 z-20">
-        {/* Top: Elegant Minimal Brand Mark */}
-        <div className="flex items-center gap-2.5">
+      <div className="w-full lg:w-[52%] xl:w-[50%] h-full flex flex-col justify-between px-6 sm:px-12 lg:px-16 xl:px-20 py-6 sm:py-8 lg:py-10 z-20 overflow-hidden">
+        {/* Top: Brand Logo */}
+        <div className="flex items-center gap-2.5 flex-shrink-0">
           <div
             className="w-7 h-7 rounded-lg bg-seagrass flex items-center justify-center shadow-[0_2px_8px_rgba(97,152,142,0.3)]"
           >
@@ -29,14 +29,14 @@ export default function HomeView({ onGoToProblem }: HomeViewProps) {
         </div>
 
         {/* Center: Headline, Body, and Waitlist Form */}
-        <div className="my-auto py-6 max-w-lg">
-          <h1 className="font-serif text-cream text-3xl sm:text-4xl lg:text-[40px] xl:text-[44px] font-normal leading-[1.14] tracking-tight mb-5">
+        <div className="my-auto py-3 sm:py-4 max-w-xl">
+          <h1 className="font-serif text-cream text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-normal leading-[1.18] tracking-tight mb-3 sm:mb-4">
             Your schedule rotates.
             <br />
             Your body doesn&apos;t have to guess.
           </h1>
 
-          <p className="font-sans text-cream/75 text-sm sm:text-base leading-relaxed mb-6 font-light">
+          <p className="font-sans text-cream/75 text-xs sm:text-sm md:text-[15px] leading-relaxed mb-5 max-w-md font-light">
             FlipShift reads your actual work schedule and builds a daily
             circadian plan around it. Sleep timing, light exposure, caffeine
             cutoffs, alertness forecasts. Specific to your next shift, not
@@ -49,7 +49,7 @@ export default function HomeView({ onGoToProblem }: HomeViewProps) {
         </div>
 
         {/* Bottom: On-screen Next Page Action Button */}
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between flex-shrink-0 pt-2 pb-1">
           <button
             onClick={onGoToProblem}
             className="group flex items-center gap-2 text-xs uppercase tracking-widest font-sans font-medium text-cream/60 hover:text-cream transition-colors cursor-pointer"
@@ -68,13 +68,13 @@ export default function HomeView({ onGoToProblem }: HomeViewProps) {
           </button>
 
           <span className="text-[11px] font-sans text-cream/40 hidden sm:inline">
-            Press ↓ or tap to advance
+            Scroll or press ↓ to advance
           </span>
         </div>
       </div>
 
-      {/* Right Column: Seamless Blurred Transition from Solid into Fluid Animation */}
-      <div className="w-full lg:w-1/2 relative min-h-[300px] lg:min-h-full flex-1 overflow-hidden">
+      {/* Right Column: Fluid Animation strictly on desktop, hidden on mobile */}
+      <div className="hidden lg:block lg:w-[48%] xl:w-[50%] relative h-full flex-1 overflow-hidden">
         {/* Soft Feathered Mask on the Fluid Shader Container */}
         <div
           className="absolute inset-0 w-full h-full"
@@ -94,13 +94,7 @@ export default function HomeView({ onGoToProblem }: HomeViewProps) {
           aria-hidden="true"
         />
         <div
-          className="hidden lg:block absolute inset-y-0 left-0 w-28 sm:w-40 pointer-events-none z-20 backdrop-blur-[4px] [mask-image:linear-gradient(to_right,black_10%,transparent_100%)] [webkit-mask-image:linear-gradient(to_right,black_10%,transparent_100%)]"
-          aria-hidden="true"
-        />
-
-        {/* Top Fade for Mobile Stack */}
-        <div
-          className="lg:hidden absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#183A37] via-[#183A37]/80 to-transparent pointer-events-none z-10 backdrop-blur-[3px] [mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)] [webkit-mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)]"
+          className="absolute inset-y-0 left-0 w-28 sm:w-40 pointer-events-none z-20 backdrop-blur-[4px] [mask-image:linear-gradient(to_right,black_10%,transparent_100%)] [webkit-mask-image:linear-gradient(to_right,black_10%,transparent_100%)]"
           aria-hidden="true"
         />
       </div>
