@@ -95,29 +95,50 @@ export default function WaitlistCapture({
               Which platform are you on?
             </p>
 
-            <div className="flex gap-3 justify-center">
-              <Button
-                variant={platform === "android" ? "primary" : "secondary"}
-                size="sm"
-                onClick={() => setPlatform("android")}
+            <div className="flex gap-3 justify-center flex-wrap">
+              {/* Android Button */}
+              <button
                 id="waitlist-platform-android"
+                onClick={() => setPlatform("android")}
+                className={`
+                  group relative flex items-center gap-2.5 px-5 py-2.5 rounded-full font-sans text-sm font-medium
+                  border transition-all duration-200 cursor-pointer select-none
+                  ${platform === "android"
+                    ? "bg-seagrass border-seagrass text-[#183A37] shadow-[0_0_16px_rgba(97,152,142,0.35)]"
+                    : isDark
+                    ? "bg-white/6 border-cream/15 text-cream/80 hover:bg-white/12 hover:border-cream/30 hover:text-cream"
+                    : "bg-slate-grey/5 border-slate-grey/15 text-slate-grey/70 hover:bg-slate-grey/10 hover:border-slate-grey/30 hover:text-slate-grey"
+                  }
+                `}
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.523 15.34a1 1 0 01-.006-1.414c.63-.632.953-1.403.953-2.223 0-1.78-1.637-3.343-4.066-3.897a.75.75 0 01.333-1.462c3.12.712 5.233 2.84 5.233 5.359 0 1.17-.462 2.27-1.33 3.17a1 1 0 01-1.418.065l.301.402zm-5.523.66c-3.038 0-5.5-1.828-5.5-4.083 0-1.17.462-2.27 1.33-3.17a1 1 0 011.418-.065.999.999 0 01.006 1.413C8.624 10.728 8.3 11.5 8.3 12.317c0 1.377 1.676 2.583 3.7 2.583s3.7-1.206 3.7-2.583a.75.75 0 011.5 0c0 2.255-2.462 4.083-5.5 4.083h-.2.2zM6.5 4l1.3 2.5h8.4L17.5 4M15 21h-2v-4.5a1.5 1.5 0 00-3 0V21H8a1 1 0 01-1-1v-8h10v8a1 1 0 01-1 1z" />
+                {/* Android Robot icon */}
+                <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M6.18 15.64a2.18 2.18 0 0 1-2.18-2.18V9.77a2.18 2.18 0 1 1 4.36 0v3.69a2.18 2.18 0 0 1-2.18 2.18zm11.64 0a2.18 2.18 0 0 1-2.18-2.18V9.77a2.18 2.18 0 1 1 4.36 0v3.69a2.18 2.18 0 0 1-2.18 2.18zM15.79 3.07l1.24-1.85a.26.26 0 0 0-.43-.29l-1.28 1.9A6.67 6.67 0 0 0 12 2.29c-.94 0-1.84.18-2.66.51L8.06.9a.26.26 0 1 0-.43.29L8.87 3.1A6.68 6.68 0 0 0 5.33 8.6h13.33a6.68 6.68 0 0 0-2.87-5.53zM9.77 6.43a.77.77 0 1 1 .77-.77.77.77 0 0 1-.77.77zm4.46 0a.77.77 0 1 1 .77-.77.77.77 0 0 1-.77.77zM5.33 9.57v8.46a1.54 1.54 0 0 0 1.54 1.54h.77V22a1.54 1.54 0 1 0 3.08 0v-2.43h2.57V22a1.54 1.54 0 1 0 3.08 0v-2.43h.77a1.54 1.54 0 0 0 1.54-1.54V9.57z" />
                 </svg>
                 Android
-              </Button>
-              <Button
-                variant={platform === "ios" ? "primary" : "secondary"}
-                size="sm"
-                onClick={() => setPlatform("ios")}
+              </button>
+
+              {/* iOS Button */}
+              <button
                 id="waitlist-platform-ios"
+                onClick={() => setPlatform("ios")}
+                className={`
+                  group relative flex items-center gap-2.5 px-5 py-2.5 rounded-full font-sans text-sm font-medium
+                  border transition-all duration-200 cursor-pointer select-none
+                  ${platform === "ios"
+                    ? "bg-seagrass border-seagrass text-[#183A37] shadow-[0_0_16px_rgba(97,152,142,0.35)]"
+                    : isDark
+                    ? "bg-white/6 border-cream/15 text-cream/80 hover:bg-white/12 hover:border-cream/30 hover:text-cream"
+                    : "bg-slate-grey/5 border-slate-grey/15 text-slate-grey/70 hover:bg-slate-grey/10 hover:border-slate-grey/30 hover:text-slate-grey"
+                  }
+                `}
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                {/* Apple logo */}
+                <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 814 1000" fill="currentColor" aria-hidden="true">
+                  <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.3-155.5-127.2C46.7 790.7 0 663 0 541.8c0-207.8 135.4-317.5 268.5-317.5 99.8 0 183 65.8 245.3 65.8 59.2 0 152-69.1 271.5-69.1zm-174.2-209.1c31.4-37.9 54.3-90.4 54.3-142.9 0-7.1-.6-14.3-1.9-20.1-51.5 1.9-110.8 34.4-147.1 75.8-28.5 32.4-55.1 84.9-55.1 138.3 0 7.7 1.3 15.5 1.9 18s9.6 1.3 14.3 1.3c46.4 0 100.2-31.2 133.6-70.4z" />
                 </svg>
-                iOS
-              </Button>
+                iPhone
+              </button>
             </div>
 
             {platform && (

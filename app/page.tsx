@@ -19,16 +19,16 @@ const viewVariants: Variants = {
     y: "0%",
     opacity: 1,
     transition: {
-      y: { type: "spring" as const, stiffness: 260, damping: 28 },
-      opacity: { duration: 0.3 },
+      y: { type: "spring" as const, stiffness: 420, damping: 36 },
+      opacity: { duration: 0.18 },
     },
   },
   exit: (direction: number) => ({
     y: direction > 0 ? "-100%" : "100%",
     opacity: 0,
     transition: {
-      y: { type: "spring" as const, stiffness: 260, damping: 28 },
-      opacity: { duration: 0.25 },
+      y: { type: "spring" as const, stiffness: 420, damping: 36 },
+      opacity: { duration: 0.14 },
     },
   }),
 };
@@ -155,13 +155,13 @@ export default function LandingPage() {
         goToNext();
         setTimeout(() => {
           isWheelLocked.current = false;
-        }, 600);
+        }, 380);
       } else if (e.deltaY < 0) {
         isWheelLocked.current = true;
         goToPrev();
         setTimeout(() => {
           isWheelLocked.current = false;
-        }, 600);
+        }, 380);
       }
     };
 
