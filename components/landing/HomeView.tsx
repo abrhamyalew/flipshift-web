@@ -1,7 +1,8 @@
-import Link from "next/link";
+"use client";
+
 import WaitlistCapture from "../ui/WaitlistCapture";
 import SmokeShader from "../ui/SmokeShader";
-import { CircadianPhaseShiftIcon } from "../ui/BrandIcons";
+import { BrandIcon } from "../ui/BrandIcons";
 
 interface HomeViewProps {
   onGoToProblem?: () => void;
@@ -17,26 +18,11 @@ export default function HomeView({ onGoToProblem }: HomeViewProps) {
       {/* Left Column: Brand Logo, Headline, Supporting Copy, Waitlist, and Next Arrow */}
       <div className="w-full lg:w-[56%] xl:w-[52%] h-full flex flex-col justify-between px-6 sm:px-10 lg:px-14 xl:px-16 py-5 sm:py-7 lg:py-8 z-20">
         {/* Top: Brand Logo */}
-        <div className="flex items-center justify-between flex-shrink-0">
-          <Link
-            href="/brand"
-            className="flex items-center gap-2.5 group cursor-pointer"
-            title="Click to review brand identity concepts"
-          >
-            <div className="w-7 h-7 rounded-lg bg-seagrass text-[#183A37] flex items-center justify-center shadow-[0_2px_8px_rgba(97,152,142,0.3)] transition-transform duration-300 group-hover:scale-105">
-              <CircadianPhaseShiftIcon size={18} />
-            </div>
-            <span className="font-serif text-base sm:text-lg text-cream font-medium tracking-tight">
-              FlipShift
-            </span>
-          </Link>
-
-          <Link
-            href="/brand"
-            className="text-[11px] font-sans uppercase tracking-wider text-seagrass/80 hover:text-seagrass border border-seagrass/25 hover:border-seagrass/50 bg-seagrass/5 px-2.5 py-0.5 rounded-full transition-colors"
-          >
-            Brand Kit Review
-          </Link>
+        <div className="flex items-center gap-2.5 flex-shrink-0">
+          <BrandIcon size={28} className="w-7 h-7" />
+          <span className="font-serif text-base sm:text-lg text-cream font-medium tracking-tight">
+            FlipShift
+          </span>
         </div>
 
         {/* Center: Headline, Body, and Waitlist Form */}

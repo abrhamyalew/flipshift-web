@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandIcon } from "../ui/BrandIcons";
 
 export default function Footer() {
   return (
@@ -18,12 +19,10 @@ export default function Footer() {
         <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div
-              className="w-6 h-6 rounded-full bg-seagrass flex items-center justify-center transition-smooth"
-              style={{ boxShadow: "0 2px 8px rgba(97,152,142,0.2)" }}
-            >
-              <span className="text-cream font-sans font-bold text-xs">F</span>
-            </div>
+            <BrandIcon
+              size={24}
+              className="w-6 h-6 transition-smooth group-hover:scale-105"
+            />
             <span className="font-serif text-cream/80 text-base font-medium">
               FlipShift
             </span>

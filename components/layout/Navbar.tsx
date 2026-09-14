@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../ui/Button";
+import { BrandIcon } from "../ui/BrandIcons";
 
 export type ViewType = "home" | "problem" | "how-it-works";
 
@@ -64,12 +65,10 @@ export default function Navbar({
             id="navbar-logo"
             className="flex items-center gap-2 group cursor-pointer text-left pl-1"
           >
-            <div
-              className="w-6 h-6 rounded-md bg-seagrass flex items-center justify-center transition-transform duration-300 group-hover:scale-105 flex-shrink-0"
-              style={{ boxShadow: "0 2px 6px rgba(97,152,142,0.3)" }}
-            >
-              <span className="text-cream font-sans font-bold text-[11px] tracking-wider">F</span>
-            </div>
+            <BrandIcon
+              size={24}
+              className="w-6 h-6 transition-transform duration-300 group-hover:scale-105"
+            />
             <span className="font-serif text-sm sm:text-base text-cream font-medium tracking-tight">
               FlipShift
             </span>

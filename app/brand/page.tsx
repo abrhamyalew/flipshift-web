@@ -2,11 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  CircadianPhaseShiftIcon,
-  FlipHorizonIcon,
-  ChronoMonogramIcon,
-} from "../../components/ui/BrandIcons";
+import { BrandIcon } from "../../components/ui/BrandIcons";
 
 interface ConceptData {
   id: 1 | 2 | 3;
@@ -49,14 +45,7 @@ export default function BrandReviewPage() {
   const activeData = concepts.find((c) => c.id === selectedConcept)!;
 
   const renderIcon = (id: 1 | 2 | 3, size: number, className = "") => {
-    switch (id) {
-      case 1:
-        return <CircadianPhaseShiftIcon size={size} className={className} />;
-      case 2:
-        return <FlipHorizonIcon size={size} className={className} />;
-      case 3:
-        return <ChronoMonogramIcon size={size} className={className} />;
-    }
+    return <BrandIcon size={size} className={className} />;
   };
 
   return (
