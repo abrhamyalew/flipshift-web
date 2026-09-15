@@ -1,17 +1,19 @@
 "use server";
 
 import { supabase } from "@/lib/supabase";
+import { isAllowedEmailDomain } from "@/lib/email-domains";
 
 interface WaitlistResult {
   success: boolean;
   message: string;
+  alreadyExists?: boolean;
 }
 
 /**
  * Submit an email to the FlipShift waitlist.
  *
  * Inserts into the Supabase `waitlist` table.
- * Duplicate emails are handled gracefully (idempotent).
+ * Duplicate emails are rejected with an alreadyExists flag.
  */
 export async function submitWaitlist(email: string): Promise<WaitlistResult> {
   // Validate email format
@@ -23,17 +25,24 @@ export async function submitWaitlist(email: string): Promise<WaitlistResult> {
     };
   }
 
+  if (!isAllowedEmailDomain(email)) {
+    return {
+      success: false,
+      message: "Please use a real email address (e.g. Gmail, Outlook).",
+    };
+  }
+
   try {
     const { error } = await supabase
       .from("waitlist")
       .insert({ email: email.toLowerCase().trim() });
 
     if (error) {
-      // Postgres unique violation -- email already exists
       if (error.code === "23505") {
         return {
-          success: true,
-          message: "You're on the list! We'll be in touch.",
+          success: false,
+          alreadyExists: true,
+          message: "This email is already on the waitlist.",
         };
       }
 
@@ -57,27 +66,19 @@ export async function submitWaitlist(email: string): Promise<WaitlistResult> {
   }
 }
 
-/**
- * Record the user's platform preference after waitlist signup.
- *
- * Uses upsert to update the platform column for the given email.
- */
+
 export async function recordPlatform(
   email: string,
   platform: "android" | "ios"
 ): Promise<{ success: boolean }> {
   try {
-    const normalizedEmail = email.toLowerCase().trim();
-
-    const { error } = await supabase
-      .from("waitlist")
-      .upsert(
-        { email: normalizedEmail, platform },
-        { onConflict: "email" }
-      );
+    const { error } = await supabase.rpc("update_waitlist_platform", {
+      p_email: email.toLowerCase().trim(),
+      p_platform: platform,
+    });
 
     if (error) {
-      console.error("[Waitlist] Platform update error:", error.message);
+      console.error("[Waitlist] Platform update error:", error.message, error.code);
       return { success: false };
     }
 
@@ -87,3 +88,4 @@ export async function recordPlatform(
     return { success: false };
   }
 }
+

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Button from "./Button";
 import SocialProof from "./SocialProof";
 import { submitWaitlist, recordPlatform } from "@/app/actions/waitlist";
+import { isAllowedEmailDomain } from "@/lib/email-domains";
 
 interface WaitlistCaptureProps {
   variant?: "dark" | "light";
@@ -12,7 +13,7 @@ interface WaitlistCaptureProps {
   id?: string;
 }
 
-type SubmitState = "idle" | "loading" | "success" | "error";
+type SubmitState = "idle" | "loading" | "success" | "error" | "already-exists";
 
 export default function WaitlistCapture({
   variant = "dark",
@@ -35,12 +36,20 @@ export default function WaitlistCapture({
       return;
     }
 
+    if (!isAllowedEmailDomain(email)) {
+      setState("error");
+      setErrorMessage("Please use a personal email (e.g. Gmail, Outlook, iCloud).");
+      return;
+    }
+
     setState("loading");
 
     try {
       const result = await submitWaitlist(email);
       if (result.success) {
         setState("success");
+      } else if (result.alreadyExists) {
+        setState("already-exists");
       } else {
         setState("error");
         setErrorMessage(result.message);
@@ -230,6 +239,21 @@ export default function WaitlistCapture({
                 )}
               </Button>
             </div>
+
+            {state === "already-exists" && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="mt-2 flex items-center gap-1.5"
+              >
+                <svg className="w-3.5 h-3.5 text-seagrass flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                <span className={`text-xs ${isDark ? "text-cream/70" : "text-slate-grey/70"}`}>
+                  You&apos;re already on the waitlist.
+                </span>
+              </motion.div>
+            )}
 
             {state === "error" && (
               <motion.div
