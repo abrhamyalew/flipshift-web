@@ -1,5 +1,7 @@
 "use server";
 
+import { supabase } from "@/lib/supabase";
+
 interface WaitlistResult {
   success: boolean;
   message: string;
@@ -8,14 +10,8 @@ interface WaitlistResult {
 /**
  * Submit an email to the FlipShift waitlist.
  *
- * Currently a mock implementation. In production, this will proxy
- * to the NestJS backend via:
- *   POST /api/waitlist { email, platform? }
- *
- * Expected NestJS contract:
- *   - 201: { id: string, email: string, createdAt: string }
- *   - 409: { error: "already_registered" }
- *   - 422: { error: "invalid_email" }
+ * Inserts into the Supabase `waitlist` table.
+ * Duplicate emails are handled gracefully (idempotent).
  */
 export async function submitWaitlist(email: string): Promise<WaitlistResult> {
   // Validate email format
@@ -27,28 +23,67 @@ export async function submitWaitlist(email: string): Promise<WaitlistResult> {
     };
   }
 
-  // Mock: simulate network delay
-  await new Promise((resolve) => setTimeout(resolve, 800));
+  try {
+    const { error } = await supabase
+      .from("waitlist")
+      .insert({ email: email.toLowerCase().trim() });
 
-  // Mock: always succeed
-  // In production: fetch(`${process.env.NESTJS_API_URL}/waitlist`, { ... })
-  console.log(`[Waitlist] New signup: ${email}`);
+    if (error) {
+      // Postgres unique violation -- email already exists
+      if (error.code === "23505") {
+        return {
+          success: true,
+          message: "You're on the list! We'll be in touch.",
+        };
+      }
 
-  return {
-    success: true,
-    message: "You're on the list! We'll be in touch.",
-  };
+      console.error("[Waitlist] Insert error:", error.message);
+      return {
+        success: false,
+        message: "Something went wrong. Please try again.",
+      };
+    }
+
+    return {
+      success: true,
+      message: "You're on the list! We'll be in touch.",
+    };
+  } catch (err) {
+    console.error("[Waitlist] Unexpected error:", err);
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
+  }
 }
 
 /**
  * Record the user's platform preference after waitlist signup.
  *
- * Expected NestJS contract:
- *   PATCH /api/waitlist/:id { platform: "android" | "ios" }
+ * Uses upsert to update the platform column for the given email.
  */
 export async function recordPlatform(
   email: string,
   platform: "android" | "ios"
-): Promise<void> {
-  console.log(`[Waitlist] Platform preference: ${email} -> ${platform}`);
+): Promise<{ success: boolean }> {
+  try {
+    const normalizedEmail = email.toLowerCase().trim();
+
+    const { error } = await supabase
+      .from("waitlist")
+      .upsert(
+        { email: normalizedEmail, platform },
+        { onConflict: "email" }
+      );
+
+    if (error) {
+      console.error("[Waitlist] Platform update error:", error.message);
+      return { success: false };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.error("[Waitlist] Unexpected error:", err);
+    return { success: false };
+  }
 }

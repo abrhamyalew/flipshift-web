@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { Newsreader, Montserrat } from "next/font/google";
+import { Newsreader, Montserrat, Geist } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const newsreader = Newsreader({
   variable: "--font-newsreader",
@@ -47,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${newsreader.variable} ${montserrat.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", newsreader.variable, montserrat.variable, "font-sans", geist.variable)}
     >
       <body className="min-h-full flex flex-col relative bg-transparent">
         {/* Fixed physical film grain texture per high-end-visual-design */}

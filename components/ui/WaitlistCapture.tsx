@@ -3,6 +3,8 @@
 import { useState, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "./Button";
+import SocialProof from "./SocialProof";
+import { submitWaitlist, recordPlatform } from "@/app/actions/waitlist";
 
 interface WaitlistCaptureProps {
   variant?: "dark" | "light";
@@ -35,14 +37,24 @@ export default function WaitlistCapture({
 
     setState("loading");
 
-    // Simulate API call - will be replaced with Server Action to NestJS
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setState("success");
+      const result = await submitWaitlist(email);
+      if (result.success) {
+        setState("success");
+      } else {
+        setState("error");
+        setErrorMessage(result.message);
+      }
     } catch {
       setState("error");
       setErrorMessage("Something went wrong. Please try again.");
     }
+  };
+
+  const handlePlatformSelect = async (selected: "android" | "ios") => {
+    setPlatform(selected);
+    // Fire and forget -- don't block the UI for this
+    recordPlatform(email, selected).catch(() => {});
   };
 
   const handleRetry = () => {
@@ -88,7 +100,7 @@ export default function WaitlistCapture({
                   {/* Android Button */}
                   <button
                     id="waitlist-platform-android"
-                    onClick={() => setPlatform("android")}
+                    onClick={() => handlePlatformSelect("android")}
                     className={`
                       flex items-center gap-2 px-4 py-2 rounded-full font-sans text-xs font-medium
                       border transition-all duration-150 cursor-pointer select-none
@@ -107,7 +119,7 @@ export default function WaitlistCapture({
                   {/* iPhone Button */}
                   <button
                     id="waitlist-platform-ios"
-                    onClick={() => setPlatform("ios")}
+                    onClick={() => handlePlatformSelect("ios")}
                     className={`
                       flex items-center gap-2 px-4 py-2 rounded-full font-sans text-xs font-medium
                       border transition-all duration-150 cursor-pointer select-none
@@ -241,6 +253,8 @@ export default function WaitlistCapture({
             >
               Get early access and founding pricing. No spam, ever.
             </p>
+
+            <SocialProof variant={variant} className="mt-3" />
           </motion.form>
         )}
       </AnimatePresence>
