@@ -9,19 +9,19 @@ interface ProgressViewProps {
 
 const progressItems = [
   {
-    label: "Brand direction",
-    status: "In place",
-    detail: "Identity, palette, typography, and product voice established.",
+    label: "Sprint 3 / Circadian engine",
+    status: "Complete",
+    detail: "Sleep timing, caffeine cutoffs, light guidance, and shift transitions are calculated.",
   },
   {
-    label: "Waitlist experience",
-    status: "Working",
-    detail: "Landing page, responsive views, validation, and sign-up flow are live.",
+    label: "Ambient light sensor integration",
+    status: "Complete",
+    detail: "Light levels can be checked against the pre-sleep and sleep-window thresholds.",
   },
   {
-    label: "MVP core loop",
-    status: "Building",
-    detail: "The circular dial is the current implementation focus.",
+    label: "Brand and waitlist foundation",
+    status: "Live",
+    detail: "The identity, landing page, responsive views, and sign-up flow are in place.",
   },
 ];
 
@@ -63,13 +63,13 @@ export default function ProgressView({
       <div className="my-auto py-5 max-w-5xl mx-auto w-full">
         <div className="max-w-2xl mb-5 sm:mb-7">
           <p className="font-sans text-[10px] uppercase tracking-[0.18em] font-semibold text-[#61988E] mb-2">
-            Early build, visible momentum
+            Early build, visible progress
           </p>
           <h2 className="font-serif text-[#183A37] text-2xl sm:text-3xl lg:text-[38px] font-normal tracking-tight leading-[1.08] mb-3">
             The first layer is in place.
           </h2>
           <p className="font-sans text-[#60495A] text-xs sm:text-sm leading-relaxed max-w-xl">
-            The product direction, brand foundation, and first working experience are now taking shape.
+            The product direction, core calculations, and first working experience are already taking shape.
           </p>
         </div>
 
@@ -94,6 +94,9 @@ export default function ProgressView({
           </div>
 
           <div className="rounded-xl bg-[#F7F9E8] border border-[#183A37]/10 px-4 sm:px-5">
+            <p className="font-sans text-[10px] uppercase tracking-[0.16em] font-semibold text-[#183A37]/50 pt-3.5 sm:pt-4">
+              Completed and in place
+            </p>
             {progressItems.map((item, index) => (
               <div
                 key={item.label}
