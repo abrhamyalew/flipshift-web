@@ -9,26 +9,21 @@ interface WaitlistResult {
   alreadyExists?: boolean;
 }
 
-/**
- * Submit an email to the FlipShift waitlist.
- *
- * Inserts into the Supabase `waitlist` table.
- * Duplicate emails are rejected with an alreadyExists flag.
- */
+
 export async function submitWaitlist(email: string): Promise<WaitlistResult> {
   // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
     return {
       success: false,
-      message: "Please enter a valid email address.",
+      message: "Please use a valid email address.",
     };
   }
 
   if (!isAllowedEmailDomain(email)) {
     return {
       success: false,
-      message: "Please use a real email address (e.g. Gmail, Outlook).",
+      message: "Please use a real email address",
     };
   }
 

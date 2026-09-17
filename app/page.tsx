@@ -5,10 +5,11 @@ import { motion, AnimatePresence, type Variants } from "framer-motion";
 import HomeView from "../components/landing/HomeView";
 import ProblemView from "../components/landing/ProblemView";
 import HowItWorksView from "../components/landing/HowItWorksView";
+import ProgressView from "../components/landing/ProgressView";
 
-export type ViewType = "home" | "problem" | "how-it-works";
+export type ViewType = "home" | "problem" | "how-it-works" | "progress";
 
-const VIEWS: ViewType[] = ["home", "problem", "how-it-works"];
+const VIEWS: ViewType[] = ["home", "problem", "how-it-works", "progress"];
 
 const viewVariants: Variants = {
   enter: (direction: number) => ({
@@ -92,6 +93,8 @@ export default function LandingPage() {
         setActiveView("problem");
       } else if (hash === "how-it-works") {
         setActiveView("how-it-works");
+      } else if (hash === "progress") {
+        setActiveView("progress");
       } else {
         setActiveView("home");
       }
@@ -242,6 +245,7 @@ export default function LandingPage() {
             home: "01 Home",
             problem: "02 Problem",
             "how-it-works": "03 How it works",
+            progress: "04 Project status",
           };
           return (
             <button
@@ -313,6 +317,24 @@ export default function LandingPage() {
             >
               <HowItWorksView
                 onGoToProblem={() => goToView("problem")}
+                onJoinWaitlist={handleJoinWaitlist}
+                onGoToProgress={() => goToView("progress")}
+              />
+            </motion.div>
+          )}
+
+          {activeView === "progress" && (
+            <motion.div
+              key="progress"
+              custom={direction}
+              variants={viewVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="absolute inset-0 w-full h-full"
+            >
+              <ProgressView
+                onGoToHowItWorks={() => goToView("how-it-works")}
                 onJoinWaitlist={handleJoinWaitlist}
               />
             </motion.div>

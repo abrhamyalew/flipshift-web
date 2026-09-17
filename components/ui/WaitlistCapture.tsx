@@ -38,7 +38,7 @@ export default function WaitlistCapture({
 
     if (!isAllowedEmailDomain(email)) {
       setState("error");
-      setErrorMessage("Please use a personal email (e.g. Gmail, Outlook, iCloud).");
+      setErrorMessage("Please use a valid email address.");
       return;
     }
 
