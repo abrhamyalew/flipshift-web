@@ -22,7 +22,7 @@ interface SocialProofProps {
 }
 
 export default function SocialProof({
-  count = 800,
+  count = 811,
   variant = "dark",
   className = "",
 }: SocialProofProps) {
